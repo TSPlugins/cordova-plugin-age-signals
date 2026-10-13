@@ -1,0 +1,8 @@
+{
+  "name": "cordova-plugin-age-signals",
+  "version": "0.1.0",
+  "description": "Play Age Signals (Android) and Declared Age Range (iOS 26+) for Cordova / OutSystems O11",
+  "cordova": { "id": "cordova-plugin-age-signals", "platforms": ["android", "ios"] },
+  "keywords": ["cordova", "ecosystem:cordova", "cordova-android", "cordova-ios", "age-signals", "age-range"],
+  "license": "Apache-2.0"
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="cordova-plugin-age-signals" version="0.1.0"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <name>AgeSignals</name>
+  <description>Google Play Age Signals (Android) + Apple Declared Age Range (iOS 26+)</description>
+  <license>Apache-2.0</license>
+
+  <js-module src="www/AgeSignals.js" name="AgeSignals">
+    <clobbers target="cordova.plugins.AgeSignals" />
+  </js-module>
+
+  <!-- ===================== ANDROID ===================== -->
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="AgeSignals">
+        <param name="android-package" value="com.example.agesignals.AgeSignalsPlugin" />
+      </feature>
+    </config-file>
+
+    <source-file src="src/android/AgeSignalsPlugin.java" target-dir="src/com/example/agesignals" />
+
+    <!-- Check Google's docs for the latest version. minSdk of this library is 23. -->
+    <framework src="com.google.android.play:age-signals:0.0.4" />
+  </platform>
+
+  <!-- ======================= iOS ======================= -->
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="AgeSignals">
+        <param name="ios-package" value="AgeSignalsPlugin" />
+      </feature>
+    </config-file>
+
+    <source-file src="src/ios/AgeSignalsPlugin.swift" />
+
+    <!-- Weak link: app must still launch on iOS < 26 -->
+    <framework src="DeclaredAgeRange.framework" weak="true" />
+
+    <!-- Entitlement. The App ID + provisioning profile must ALSO have the capability. -->
+    <config-file target="*/Entitlements-Debug.plist" parent="com.apple.developer.declared-age-range">
+      <true />
+    </config-file>
+    <config-file target="*/Entitlements-Release.plist" parent="com.apple.developer.declared-age-range">
+      <true />
+    </config-file>
+
+    <!-- Remove if your MABS version already builds Swift plugins without it. -->
+    <dependency id="cordova-plugin-add-swift-support" version="2.0.2" />
+  </platform>
+</plugin>
